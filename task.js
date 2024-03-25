@@ -6,26 +6,23 @@ tasksForm.addEventListener('submit', e => {
   e.preventDefault();
   
   if (taskInput.value.length) {
-    let div = document.createElement('div');
-    div.className = 'task';
-    let ChildDiv = document.createElement('div');
-    ChildDiv.className = 'task__title';
-    ChildDiv.textContent = taskInput.value;
-    let ChildA = document.createElement('a');
-    ChildA.href = '#';
-    ChildA.className = 'task__remove';
-    ChildA.textContent = '&times;';
+    tasksList.insertAdjacentHTML('afterbegin', `
+    <div class='task'>
+      <div class='task__title'>
+        ${taskInput.value}
+      </div>
+      <a href='#' class='task__remove'>&times;</a>
+    </div>
+    `);
 
-    div.appendChild(ChildDiv);
-    div.appendChild(ChildA);
-    tasksList.appendChild(div);
-    
     taskInput.value = null;
     
-    ChildA.addEventListener('click', (e) => {
+    const removeButton = tasksList.getElementsByClassName('task__remove')[0];
+    const removeDiv = tasksList.getElementsByClassName('task')[0];
+    removeButton.addEventListener('click', (e) => {
       e.preventDefault();
       
-      div.remove();
+      removeDiv.remove();
     })
   }
 });
